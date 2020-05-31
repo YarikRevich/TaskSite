@@ -1,0 +1,46 @@
+* {
+  background-color: #ffffff; 
+  
+  padding: 0%;
+    
+}
+
+
+
+
+
+input{
+  background-color: chocolate; 
+
+}
+
+
+
+a {
+  
+  color: #b64c32;
+
+  text-decoration: none; 
+  font-weight: bold;
+
+}
+
+a:hover{
+  color: rgb(144, 151, 150);
+
+
+}
+
+
+.u{
+  align-content: center;
+  
+
+
+}
+
+.taskbot:hover {
+  text-decoration: none;
+  position: relative;
+  
+}

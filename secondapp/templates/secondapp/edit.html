@@ -1,0 +1,52 @@
+{% extends 'layout/basicedit.html' %}
+
+{% block title %}
+ <title>Запис - {{note}}</title>
+{% endblock title %}
+
+{% block content %}
+
+<div class="table-edit">
+    <div class="edit">
+        <div class="form-edit">
+            <span style="font-size: 130%;text-align:center;margin-left:4em;background-color:#b8b0b0">Редагування</span>
+            <div style="height:3em;margin-top:2em;font-size:120%;background-color:#b8b0b0;border:2px solid #000000;border-radius:10px">
+            Запис: {{note}}
+            </div>
+            <div style="margin-top:2em;font-size:120%;background-color:#b8b0b0">
+            Дії:
+            </div>
+            <form style="height:30%;margin-top:.4em;background-color:#b8b0b0" action="{% url "Edit" %}" method="post">
+                {% csrf_token %}
+            
+            
+                <button style="width:8em;height:3.5em;margin-top:.4em;margin-left:.2em" type="submit" class="btn btn-success">Видалити запис</button>
+
+            </form>
+
+
+
+
+            <form style="height:20%;background-color:#b8b0b0" action="{% url "EditEntryPage"%}" method="get">
+        
+            
+                <button style="width:8em;height:3.5em;margin-left:.2em;z-index: 9" type="submit" class="btn btn-success">Редагувати запис</button>
+
+
+            </form>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+{% endblock content %}

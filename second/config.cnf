@@ -1,0 +1,5 @@
+[client]
+database = myproject
+user = yaroslav
+password = yariksun4002
+default_character_set = utf8

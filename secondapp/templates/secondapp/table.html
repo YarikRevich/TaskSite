@@ -1,0 +1,42 @@
+{% extends 'layout/basicedit.html' %}
+
+{% block title %}
+ <title>Запис для таблиці</title>
+{% endblock title %}
+
+
+
+{% block content %}
+
+
+    <style>
+    p{
+        background-color: #b8b0b0;
+    }
+    label{
+        background-color: #b8b0b0;
+    }
+    </style>
+
+
+
+
+    <div class="table-edit">
+        <div class="edit">
+
+
+
+            <form class="form-edit" action="{% url "Sheet" %}" method="post">
+                {% csrf_token %}
+                <div style="background-color:#b8b0b0" class="form-group">
+                    {{form.as_p}}
+                </div>
+                <button style="width:8em;height:2.5em;margin-top:.4em;margin-left:.2em" type="submit" class="btn btn-success">Підтвердити</button>
+            </form>
+        </div>
+
+    </div>
+
+
+    
+{% endblock content %}

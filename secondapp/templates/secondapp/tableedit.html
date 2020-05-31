@@ -1,0 +1,49 @@
+{% extends 'layout/basicedit.html' %}
+
+{% block title %}
+ <title>Редагування таблиці</title>
+{% endblock title %}
+
+{% block content %}
+    <div class="table-edit">
+        <div class="edit">
+
+
+            <div class="form-edit">
+                <form style="background-color:#b8b0b0" action="{% url "TableEdit" %}" method="post">
+
+                    {% csrf_token %}
+                    <input type="text" style="width:15em;height:3em;margin-left:2.2em" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="{{stat}}" value="{{table}}">
+                
+                    <button style="width:8em;height:2.5em;margin-top:.4em;margin-left:2.2em" type="submit" class="btn btn-success">Підтвердити</button>
+                
+                </form>
+            
+                <form style="background-color:#b8b0b0" action="{% url "DeleteTable" %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name={{stat}} value="{{table}}"> 
+                    <a href="firstpage/"><button style="width:8em;height:3.5em;margin-top: 2em;margin-left:2em" class="btn btn-danger">Видалити запис</button></a>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <script>
+    var error = "{{error}}"
+    
+    if(error == "True"){
+        
+
+        var div = document.createElement("div");
+        div.textContent = "Ви маєте ввести число";
+        div.setAttribute("class","alert alert-danger");
+        div.setAttribute("role","alert");
+        document.body.appendChild(div); 
+        
+    }
+
+    </script>
+{% endblock content %}

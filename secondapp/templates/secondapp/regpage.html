@@ -1,0 +1,103 @@
+{% extends 'layout/basicpage.html' %}
+
+{% block title %}
+<title>Реєстрація</title>
+{% endblock title %}
+
+
+
+{% block content %}
+        <style>
+        *{
+            background-color: #5f9ea0;
+        }
+        
+        
+        </style>
+        
+        <nav style="background-color: #5f9ea0" class="navbar navbar-expand-lg navbar-light bg">
+            <nav style="width:10%; margin:0%; padding: 0%; background-color: #5f9ea0" class="navbar navbar-light bg">
+                <a style="background-color: #5f9ea0;" class="navbar-brand" href="#">
+                
+                <img style="border-radius: 30px; margin-left: 10%; background-color: #5f9ea0" id="image" src="/static/secondapp/image.png" width="60" height="60" class="d-inline-block align-top" alt="" loading="lazy">
+                
+                </a>
+                <a  style="font-weight: bold;margin-right:15%;color: #ffff00" href="#">
+                <span>TaskBot</span>
+                </a>
+            </nav>
+            <a  class="navbar-brand" href="#">Navbar</a>
+            <button  class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span  class="navbar-toggler-icon"></span>
+            </button>
+
+            <div  class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul style="background-color:#5f9e00" class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Dropdown
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                    </li>
+                </ul>
+                
+            </div>
+        </nav>
+        <div align="center" style="margin: 0%; padding: 0%">
+            
+
+            
+                    <form action="{% url "Reg"%}"method="post">
+
+                        {% csrf_token %}
+                        <label for="exampleInputEmail1">Реєстрація</label>
+
+                        
+                        {% if form.errors %}
+                            <div style="width:20em" class="alert alert-danger" role="alert">
+                                {{form.email.errors.as_text}}
+                            </div>
+                                      
+                            
+                        {% endif %}
+                        
+
+
+                        {% for forms in form  %}
+                            {{forms}}
+                        {% endfor %}
+
+                        
+                        
+                        
+                        
+                        
+
+
+                        
+
+                        <!--<input style="width: 250px" required autocomplete="off" type="email" size="10" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email" align="center" placeholder="example@gmail.com">
+                        <input style="width: 250px; margin-bottom: .4%; margin-top: .4%" type="password" required class="form-control" id="inputPassword4" name="password" placeholder="Напишіть ваш пароль">-->
+                        <div>
+                        <a href="{% url "Forma" %}" class="badge badge-light">Авторизація</a>
+                        </div>
+
+                        <button style="background-color: #736e31;margin-top:.3em"type="submit" class="btn btn-primary">Зареєструватися</button>
+                    </form>
+        </div>           
+
+{% endblock %}
