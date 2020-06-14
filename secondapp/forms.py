@@ -1,119 +1,160 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Regestration,Note,Table
-from django.core.exceptions import ValidationError
+from django.shortcuts import HttpResponse
+
+
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
+
+
+from .models import Note,Table
 
 
 
-class Forma(forms.ModelForm):
+
+
+class CreateRegestrationForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = [
+            "username",
+            "email",
+            "password1",
+            "password2"
+            ]
+        widgets = {
+            "username": forms.TextInput(attrs={
+                                        "class":"form-control",
+                                        "style":"width:250px",
+                                        "placeholder":"example@gmail.com",
+                                        "type":"email",
+                                    }),
+
+
+            "errors":forms.TextInput(attrs={
+                                        "style":"background-color:#ffff00"
+                                    })
+        }
+    password1 = forms.CharField(widget = forms.PasswordInput(attrs={
+                                                        "class":"form-control",
+                                                        "style":"width: 250px;margin-top:1em",
+                                                        "placeholder":"Ваш пароль"
+                                                    }))
+
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={
+                                                        "class":"form-control",
+                                                        "style":"width: 250px;margin-top:1em",
+                                                        "placeholder":"Підтвердження паролю"
+                                                    }))
+
+
+
+class CreateNoteForm(forms.ModelForm):
     class Meta:
         model = Note
-        fields = ["note"]
+        fields = [
+            "note"
+            ]
+        labels = {
+            "note":"Запис:"
+        }
         widgets = {
-            "note": forms.TextInput(attrs={"class":"form-control","placeholder":"Введіть бажаний запис"})
+            "note": forms.TextInput(attrs={
+                    "class":"form-control",
+                    "placeholder":"Введіть бажаний запис"
+                    })
         }
 
 
-    def clean_note(self):
-        data = self.cleaned_data["note"]
-        return data
-    
-    
-    
-    
 
-    def save(self):
-        from .views import remote_email,remote_addr
-        new = Note.objects.create(
-            note = self.cleaned_data["note"],
-            note_email = remote_email[remote_addr["email"]]
-        )
-        return new
-    
-
-
-class TableForm(forms.Form):
-    loan = forms.CharField(max_length=50,label="За що")
-    description = forms.CharField(max_length=200,required=False,label="Опис")
-    amount = forms.IntegerField(label="Сума")
-
-    loan.widget.attrs.update({"class":"form-control","placeholder":"Напишіть за що ви винні гроші"})
-    description.widget.attrs.update({"class":"form-control","placeholder":"Опишіть заборгованість"})
-    amount.widget.attrs.update({"class":"form-control","placeholder":"Вкажіть сумму заборгованості"})
-    
-
-    def clean_loan(self):
-        data = self.cleaned_data["loan"]
-        
-        return data
-    
-
-    def clean_description(self):
-        data = self.cleaned_data["description"]
-        if data == "":
-            changed_data = self.cleaned_data["description"]
-            changed_data = "-"
-            return changed_data
-        
-        return data
-    
-
-    def clean_amount(self):
-        data = self.cleaned_data["amount"]
-        return data
-    
-    def save(self):
-        from .views import remote_addr,remote_email
-        
-        new = Table.objects.create(
-            loan = self.cleaned_data["loan"],
-            description = self.cleaned_data["description"],
-            amount = self.cleaned_data["amount"],
-            email = remote_email[remote_addr["email"]]
-        )
-        return new
-
-
-
-class RegForm(forms.ModelForm):
+class CreateTableForm(forms.ModelForm):
     class Meta:
-        model = Regestration
-        fields = ["email","password"]
-        labels = {"email":"","password":""}
+        model = Table
+        fields = [
+            "loan",
+            "description",
+            "amount"
+            ]
         widgets = {
-            "email": forms.TextInput(attrs={"class":"form-control","style":"width: 250px","placeholder":"example@gmail.com"}),
-            "password": forms.TextInput(attrs={"class":"form-control","style":"width: 250px;margin-top:1em","placeholder":"123456"}),
-            "errors":forms.TextInput(attrs={"style":"background-color:#ffff00"})
+            "loan":forms.TextInput(attrs={
+                    "class":"form-control",
+                    "placeholder":"Напишіть за що ви винні гроші"
+                    }),
+            "description":forms.TextInput(attrs={
+                    "class":"form-control",
+                    "placeholder":"Опишіть заборгованість"
+                    }),
+            "amount":forms.TextInput(attrs={
+                    "class":"form-control",
+                    "placeholder":"Вкажіть сумму заборгованості"
+                    })
+        }   
+
+
+class EditNoteForm(forms.ModelForm):
+    class Meta:
+        model = Note
+        fields = [
+            "note"
+            ]
+        labels = {
+            "note":"Запис:"
+        }
+        widgets = {
+            "note":forms.TextInput(attrs={
+                    "class":"form-control"
+                    })
         }
         
 
 
-    def clean_email(self):
-        data = self.cleaned_data["email"]
-        if Regestration.objects.filter(email=data).exists():
-            raise forms.ValidationError("Аккаунт з такою адресою вже зареєстрований")
-            
-        return data
+class TableLoanUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Table
+        fields = [
+            "loan"
+            ]
         
-
+        labels = {
+            "loan":"За що"
+            }
         
-        
-    
+        widgets = {
+            "loan":forms.TextInput(attrs={
+                    "class":"form-control"
+                })
+            }
 
-     
-    def clean_password(self):
-        data = self.cleaned_data["password"]
-        
-        return data
-    
+class TableDescriptionUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Table
+        fields = [
+            "description"
+            ]
 
-    def save(self):
-        new = Regestration.objects.create(
-            email = self.cleaned_data["email"],
-            password = self.cleaned_data["password"]
+        labels = {
+            "description":"Опис"
+            }
 
+        widgets = {
+            "description":forms.TextInput(attrs={
+                    "class":"form-control"
+                })
+            }
 
-        )
+class TableAmountUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Table
+        fields = [
+            "amount"
+            ]
 
+        labels = {
+            "amount":"Скільки"
+            }
 
-        return new
+        widgets = {
+            "amount":forms.TextInput(attrs={
+                    "class":"form-control"
+                })
+            }

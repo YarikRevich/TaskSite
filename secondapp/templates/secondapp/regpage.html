@@ -61,26 +61,43 @@
             
 
             
-                    <form action="{% url "Reg"%}"method="post">
+                    <form action="{% url "Regestration"%}"method="post">
 
                         {% csrf_token %}
                         <label for="exampleInputEmail1">Реєстрація</label>
 
                         
                         {% if form.errors %}
-                            <div style="width:20em" class="alert alert-danger" role="alert">
-                                {{form.email.errors.as_text}}
-                            </div>
-                                      
+                            {% if form.username.errors %}
+                                <div style="width:20em" class="alert alert-danger" role="alert">
+                                    {{form.username.errors.as_text}}
+                                
+                                </div>
+                            {% endif %}
+
+                            {% if form.password1.errors %}
+                                <div style="width:20em" class="alert alert-danger" role="alert">
+                                    {{form.password1.errors.as_text}}
+                                
+                                </div>
+                            {% endif %}
+
+                            {% if form.password2.errors %}
+                                <div style="width:20em" class="alert alert-danger" role="alert">
+                                    {{form.password2.errors.as_text}}
+                                
+                                </div>
+                            
+                            {% endif %}
                             
                         {% endif %}
                         
 
 
-                        {% for forms in form  %}
-                            {{forms}}
-                        {% endfor %}
-
+                        {{form.username}}
+                        {{form.password1}}
+                        {{form.password2}}
+                        
                         
                         
                         
@@ -93,7 +110,7 @@
                         <!--<input style="width: 250px" required autocomplete="off" type="email" size="10" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email" align="center" placeholder="example@gmail.com">
                         <input style="width: 250px; margin-bottom: .4%; margin-top: .4%" type="password" required class="form-control" id="inputPassword4" name="password" placeholder="Напишіть ваш пароль">-->
                         <div>
-                        <a href="{% url "Forma" %}" class="badge badge-light">Авторизація</a>
+                        <a href="{% url "Authorization" %}" class="badge badge-light">Авторизація</a>
                         </div>
 
                         <button style="background-color: #736e31;margin-top:.3em"type="submit" class="btn btn-primary">Зареєструватися</button>

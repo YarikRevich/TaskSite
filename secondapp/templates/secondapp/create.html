@@ -21,7 +21,7 @@
 <div class="table-edit">
     <div class="edit">
 
-        <form class="form-edit" action="{% url "Note" %}" method="post">
+        <form class="form-edit" method="post">
             {% csrf_token %}
             <div style="background-color:#b8b0b0" class="form-group">
                 {{form.as_p}}
@@ -33,22 +33,5 @@
 </div>
 
 
-
-
-        
-     <!--   <div>
-        <form action="{% url "Note" %}"method="post">
-        {% csrf_token %}
-
-        {{ form.as_p }}
-        
-        <input type="submit" value="Додати">
-        </form>
-        </div>
-        
-    </body>
-
-
-</html>-->
 
 {% endblock content %}

@@ -16,19 +16,33 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path,include
-from secondapp.views import ath,Home,CreateNote,TableEdit,Edit,EditEntrypage,Sheet,Reg,DeleteTable
+
+from secondapp.views import AuthorizationClass,TableEdit,EditNote,TaskMenu,RegestrationClass,DeleteTable,Profile,DeleteNote,HomePage,LogoutClass,CreateNoteClass,CreateTableClass
+
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    path("",ath,name="Forma"),
-    path("homepage/",Home.as_view(),name="Home"),
-    path("homepagee/sheet",Sheet.as_view(),name="Sheet"),
-    path("homepagee/",CreateNote.as_view(),name="Note"),
-    path("/tableedit/",TableEdit.as_view(),name="TableEdit"),
-    path("regestration/",Reg.as_view(),name="Reg"),
-    path("deletetable/",DeleteTable.as_view(),name="DeleteTable"),
-    path("editpage/",Edit.as_view(),name="Edit"),
-    path("editpage/editentry/",EditEntrypage.as_view(),name="EditEntryPage"),
+
+    path("",AuthorizationClass.as_view(),name="Authorization"),
+    path("regestration/",RegestrationClass.as_view(),name="Regestration"),
+    path("logout/",LogoutClass.as_view(),name="Logout"),
+
+    path("homepage/table/option_name=<str:name_of_option>/<int:pk>",TableEdit.as_view(),name="TableEdit"),
+    path("homepage/task/note_update/<int:pk>",EditNote.as_view(),name="EditNote"),
+    path("homepage/task/note=<int:pk>",TaskMenu.as_view(),name="TaskMenu"),
+    path("homepage/profile",Profile.as_view(),name="Profile"),
+    path("homepage/note_delete/<int:pk>",DeleteNote.as_view(),name="DeleteNote"),
+    path("homepage/task",CreateNoteClass.as_view(),name="Note"),
+    path("homepage/table_delete/<int:pk>",DeleteTable.as_view(),name="DeleteTable"),
+    path("homepage/sheets",CreateTableClass.as_view(),name="Sheet"),
+    path("homepage/",HomePage.as_view(),name="Home"),
+   
+    
+    
+    
+    #path("table_edit",TableEdit.as_view(),name="Edit"),
+    
+    #path("editpage/editentry/",DeleteTable.as_view(),name="DeleteTable"),
     
     
     

@@ -12,7 +12,7 @@
 
 	 	@media screen and (min-width: 601px){
 		* {
-			overflow: auto;
+			
 			padding:2px;
 			font-family: 'Montserrat', sans-serif;
 			font-weight: bold;
@@ -56,15 +56,16 @@
 
 		}
 		.head > div.info > div.button{
-			height: 110%;
+			height: 100%;
 			background-color: #d6d2d2;
+			max-height: 100%
 		}
 
 
 
 
 		.main{
-
+			overflow: auto;
 			border: 5px solid #e1e6e5;
 			height: 733px;
 			display: grid;
@@ -73,6 +74,7 @@
 		}
 
 		.main > div.tasks{
+			overflow: auto;
 			background-color: #d6d2d2;
 			font-family: 'Montserrat', sans-serif;
 			font-weight: bold;
@@ -82,6 +84,7 @@
 
 		}
 		.main > div.sheets{
+			overflow: auto;
 			background-color: #d6d2d2;
 			text-align:center;
 
@@ -117,8 +120,13 @@
 		}
 		
 
-		.control > div.add-sth{
-			background-color: #32321f
+		.control > div.edit-accaunt{
+			background-color: #cfd8e8;
+			border:2px solid #ffffff;
+			text-align: center;
+			display: grid;
+			grid-template-columns: 100%;
+			
 		}
 
 		
@@ -132,35 +140,24 @@
 
 		<div class="head">
 			<div class="welcome">
-			<span style="background-color:#d6d2d2;font-size: 31px;font-weight: bold;font-family: 'Montserrat', sans-serif" class="Test">TaskBot</span>
-			
+				<span style="background-color:#d6d2d2;font-size: 31px;font-weight: bold;font-family: 'Montserrat', sans-serif" class="Test">TaskBot</span>
 			</div>
 
 
 			<div class="info">
 				<div class="email">
-					
-					<div style="background-color:#d6d2d2;height: 50px;margin-top:10px;max-width:100%;position: relative;text-align:right;width:100%">
-					
-					{{email}}
-					
+					<div style="background-color:#d6d2d2;height: 80%;margin-top:2%;max-height:100%;max-width:100%;text-align:right;width:100%">
+						{{email}}
 					</div>
-					
-
-
 				</div>
 
 				<div class="button">
-					<form style="width: 100%;max-width:100%;background-color:#d6d2d2;font-size:100%;text-align:right;height:100%" action="{% url "Home" %}" method="post">
+					<form style="width: 100%;max-width:100%;max-height:100%;background-color:#d6d2d2;font-size:100%;text-align:right;height:100%" action="{% url "Logout" %}" method="post">
         				{% csrf_token %}
-				
-        				<button style="height:100%;margin-right:20px" type="submit" class="btn btn-danger">Вийти з аккаунту</button>
-				
+        				<button style="height:100%;max-height:100%;position: static" type="submit" class="btn btn-danger">Вийти з аккаунту</button>
 					</form>
 				</div>
-			
 			</div>
-
 		</div>
 
 
@@ -170,43 +167,23 @@
 		<div class="main">
 			<div class="tasks">
 				{% for not in notes %}
-				<!--<span style="background-color: #d6d2d2">
-        		<p style="margin-left: .6%;background-color: #d6d2d2" >{{ not.note }}</p>
-				<p style="margin-left: .6%;background-color: #d6d2d2" >{{ not.published|date:"d.m.Y H:i:s" }}</p>
-				</span>-->
 				<div style="border: 2px solid #d6d2d2;background-color: #d6d2d2" class="notes" >
-        		<form style="margin-left: .6%;background-color:#d6d2d2;border: 0px" action="{% url "Edit" %}" method="get">
-				
-				
-				
-				
-				<!--<span style="background-color: #d6d2d2">
-        		<p style="margin-left: .6%;background-color: #d6d2d2" >{{ not.note }}</p>
-				<p style="margin-left: .6%;background-color: #d6d2d2" >{{ not.published|date:"d.m.Y H:i:s" }}</p>
-				</span>-->
-				<input type="hidden"  name="note" value={{not.pk}}>
-				<button style="border: 0px;background-color:#d6d2d2;max-width:100%;width:100%;text-align: center" type="submit">
-				<span style="background-color: #d6d2d2;text-align: center">
-				<p style="background-color: #d6d2d2" >{{ not.note }}</p>
-				<p style="background-color: #d6d2d2" >{{ not.published|date:"d.m.Y H:i:s" }}</p>
-				</span>
-				</button>
-        		</form>
+					
+        			<form style="margin-left: .6%;background-color:#d6d2d2;border: 0px" action="{% url "TaskMenu" pk=not.pk %}" method="get">
+					
+						<button style="border: 0px;background-color:#d6d2d2;max-width:100%;width:100%;text-align: center" type="submit">
+							<span style="background-color: #d6d2d2;text-align: center">
+								<p style="background-color: #d6d2d2" >{{ not.note }}</p>
+								<p style="background-color: #d6d2d2" >{{ not.published|date:"d.m.Y H:i:s" }}</p>
+							</span>
+						</button>
+        			</form>
 				</div>
-
-
         		{% endfor %}
-
-
-
-
-
-
-
-
 			</div>
 
-			<div class="sheets">
+
+		<div class="sheets">
 			<table border="1" style="width:100%;padding:8px;">
 				<tr>
 					<th style="background:#cfd8e8">За що</th>
@@ -215,33 +192,33 @@
 				</tr>
 				{% for table in form %}
 				<tr>
-					<th style="background:#f2f5fa">
+					<th style="background:#f2f5fa;width: 40%">
 					
-					<form style="height:10%;background-color:#f2f5fa" action="{% url "TableEdit" %}" method="get">
+					<form style="height:10%;background-color:#f2f5fa" action="{% url "TableEdit" pk=table.pk name_of_option="loan" %}" method="get">
 
-					<input type="hidden" name="loan" value={{table.pk}}>
+					
 					<button style="border: none;background-color:#f2f5fa" type="submit">{{table.loan}}</button>
 					</form>
 					
 					</th>
-					<th style="background:#f2f5fa">
+					<th style="background:#f2f5fa;width: 40%;max-width:150px;overflow:auto">
 					
 					
 					
-					<form style="height:10%;background-color:#f2f5fa" action="{% url "TableEdit" %}" method="get">
+					<form style="height:10%;background-color:#f2f5fa" action="{% url "TableEdit" pk=table.pk name_of_option="description" %}" method="get">
 
-					<input type="hidden" name="description" value={{table.pk}}>
+					
 					<button style="border: none;background-color:#f2f5fa" type="submit">{{table.description}}</button>
 					</form>
 					
 					
 					
 					</th>
-					<th style="background:#f2f5fa">
+					<th style="background:#f2f5fa;width: 20%">
 					
-					<form style="height:10%;background-color:#f2f5fa" action="{% url "TableEdit" %}" method="get">
+					<form style="height:10%;background-color:#f2f5fa" action="{% url "TableEdit" pk=table.pk name_of_option="amount" %}" method="get">
 
-					<input type="hidden" name="amount" value={{table.pk}}>
+		
 					<button style="border:none;background-color:#f2f5fa" type="submit">{{table.amount}}</button>
 					</form>
 					
@@ -258,7 +235,11 @@
 				<tr>
 					<th style="background:#c3dbca">Сумарна заборгованість</th>
 					<th style="background:#c3dbca"></th>
+					{% if sum %}
 					<th style="background:#c3dbca">{{sum}}</th>
+					{% else %}
+					<th style="background:#c3dbca">0</th>
+					{% endif %}
 				</tr>
 			</table>
 			</div>
@@ -283,8 +264,10 @@
 				</div>
 			</div>
 
-			<div class="add-sth">
-			
+			<div class="edit-accaunt">
+				<div style="background:#cfd8e8;text-align:center;margin-right:4em" class="add-button">
+					<a href="{% url "Profile" %}" title="Редагувати аккаунт"><button style="height: 45px; max-width: 100%;width:75%;margin-top:1.2em;margin-left:2.8em" id="low-button" class="badge badge-secondary">Редагувати аккаунт</button></a>
+				</div>
 			</div>
 
 		</div>
@@ -298,67 +281,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <!--<div style="background-color: #ffffff;height:30px">
-        <span style="font-size: 31px;font-weight: bold" class="Test">Вітаю</span>
-        <div style="background-color: #ffffff;height: 40px;margin-left:30%">
-        <svg style="margin-left: 50%" class="bi bi-people" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.995-.944v-.002.002zM7.022 13h7.956a.274.274 0 0 0 .014-.002l.008-.002c-.002-.264-.167-1.03-.76-1.72C13.688 10.629 12.718 10 11 10c-1.717 0-2.687.63-3.24 1.276-.593.69-.759 1.457-.76 1.72a1.05 1.05 0 0 0 .022.004zm7.973.056v-.002.002zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10c-1.668.02-2.615.64-3.16 1.276C1.163 11.97 1 12.739 1 13h3c0-1.045.323-2.086.92-3zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
-        </svg>
-        <span style="margin-left: 80%;height:10px"> {{ email }}</span>
-        </div>
-        
-        <form action="{% url "Home" %}" method="post">
-        {% csrf_token %}
-        <label for="logout"></label>
-        <button type="submit" class="btn btn-danger">Вийти з аккаунту</button>
-        
-        <div>
-        </form>
-        {% for not in notes %}
-        <p style="margin-left: .6%" >{{ not.note }}</p>
-
-
-        <form style="margin-left: .6%" action="{% url "Edit" %}" method="get">
-
-
-        <input type="hidden"  name="note" value={{not.pk}}>
-        <button type="submit" class="btn btn-success">Редагувати</button>
-        
-
-        </form>
-
-
-        {% endfor %}
-        </div>
-        
-
-        <a href="{% url "Note" %}" title="Кнопка для додавання запису"><span style="margin-top: .6% ;margin-left: .6%; height: 40px; width: 200px;font-size: 94%" class="badge badge-secondary">Додати новий запис</span></a>
-        <div style="background-color:#ffffff;margin-top:10%" class="bottom">
-			<div class="first">
-                <span>Bottom</span>
-			</div>
-			<div>
-				<span>Second</span>
-			</div>
-        </div>-->
 
 
 

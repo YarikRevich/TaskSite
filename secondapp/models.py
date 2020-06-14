@@ -1,22 +1,35 @@
 from django.db import models
+from django.contrib.auth.models import User
 
-class Regestration(models.Model):
-    email = models.EmailField(max_length=100,unique=True)
-    password = models.CharField(max_length=50)
 
 
 
 class Note(models.Model):
+    author = models.CharField(max_length=200,name="author")
     note = models.CharField(max_length=50)
     published = models.DateTimeField(auto_now_add=True,db_index=True)
-    note_email = models.EmailField(max_length=254)
+
+    def __str__(self):
+        return self.note
+
     class Meta:
         ordering = ["-published"]
 
 
+
+
 class Table(models.Model):
+    author = models.CharField(max_length=200,name="author")
     loan = models.CharField(max_length=50)
     description = models.CharField(max_length=200)
     amount = models.IntegerField()
-    email = models.EmailField(max_length=254)
+
+    def __str__(self):
+        return self.loan
+
+    def __str__(self):
+        return self.description
+    
+    
+
     

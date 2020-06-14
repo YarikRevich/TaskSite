@@ -62,14 +62,14 @@
             
 
             
-                    <form action="{% url "Forma"%}"method="get">
-
+                    <form action="{% url "Authorization"%}"method="post">
+                        {% csrf_token %}
                     
                         <label for="exampleInputEmail1">Авторизація</label>
                         <input style="width: 250px" required autocomplete="off" type="email" size="10" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email" align="center" placeholder="example@gmail.com">
                         <input style="width: 250px; margin-bottom: .4%; margin-top: .4%" type="password" required class="form-control" id="inputPassword4" name="password" placeholder="Напишіть ваш пароль">
                         <div>
-                        <a href="{% url "Reg" %}" class="badge badge-light">Реєстрація</a>
+                        <a href="{% url "Regestration" %}" class="badge badge-light">Реєстрація</a>
                         </div>
 
                         <button style="background-color: #736e31;margin-top:.4em"type="submit" class="btn btn-primary">Увійти</button>
@@ -93,7 +93,7 @@
 
 
                     
-                    <p class="h6" id="text" ></p>
+                    <!--<p class="h6" id="text" ></p>
                     <script type="text/javascript">
                         var doc = document.getElementById("text");
                         var succes_ath = "{{ succes }}";
@@ -109,7 +109,7 @@
                             document.write("Ви не авторизовані");
 
                         }
-                    </script>
+                    </script>-->
                     
               
         </div>

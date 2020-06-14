@@ -1,0 +1,26 @@
+{% extends 'layout/basicedit.html' %}
+
+{% block content %}
+<div class="table-edit">
+    <div class="edit">
+        <div class="form-edit">
+            <div style="margin-top:3em;background-color:#b8b0b0">
+                <div style="text-align:center;background-color:#b8b0b0">Аккаунт</div>
+                <div style="background-color:#b8b0b0;margin-top:.8em">Email: <span style="margin-left:.5em;background-color:#b8b0b0">{{email}}</span></div>
+            </div>
+            <div style="text-align:center;margin-top:2.5em;background-color:#b8b0b0">Розширена інформація</div>
+            <div style="background-color:#b8b0b0;margin-top:.8em">
+                {% if connected %}
+                    <div style="background-color:#b8b0b0">Стан: <span style="margin-left:.5em;background-color:#b8b0b0">Аккаунт під'єднаний</span></div>
+                {% else %}
+                    <div style="background-color:#b8b0b0">Стан: <span style="margin-left:.5em;background-color:#b8b0b0">Аккаунт не під'єднаний</span></div>
+                {% endif %}
+                <div style="background-color:#b8b0b0">Ім'я: <span style="margin-left:.5em;background-color:#b8b0b0">{{name}}</span></div>
+                <div style="background-color:#b8b0b0">Прізвище: <span style="margin-left:.5em;background-color:#b8b0b0">{{last_name}}</span></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

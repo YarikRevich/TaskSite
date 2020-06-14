@@ -16,7 +16,7 @@
             <div style="margin-top:2em;font-size:120%;background-color:#b8b0b0">
             Дії:
             </div>
-            <form style="height:30%;margin-top:.4em;background-color:#b8b0b0" action="{% url "Edit" %}" method="post">
+            <form style="height:30%;margin-top:.4em;background-color:#b8b0b0" action="{% url "DeleteNote" pk=note.pk %}" method="post">
                 {% csrf_token %}
             
             
@@ -27,7 +27,7 @@
 
 
 
-            <form style="height:20%;background-color:#b8b0b0" action="{% url "EditEntryPage"%}" method="get">
+            <form style="height:20%;background-color:#b8b0b0" action="{% url "EditNote" pk=note.pk %}" method="get">
         
             
                 <button style="width:8em;height:3.5em;margin-left:.2em;z-index: 9" type="submit" class="btn btn-success">Редагувати запис</button>
