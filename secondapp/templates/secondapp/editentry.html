@@ -15,16 +15,35 @@ label{
 <div class="table-edit">
     <div class="edit">
         
-        <form class="form-edit" method="post">
+        <form name="form" class="form-edit" onsubit="return false;"method="post">
+            {% if option == "note" %}
             <div style="margin-left:4.4em; margin-top:.3em;background-color:#b8b0b0;font-size:120%">
             Зміна запису
             </div>
-            {% csrf_token %}
-            <div style="background-color:#b8b0b0;margin-top:1.5em" class="form-group">
-                {{form}}
-                <!--<input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="changednote" value="{{ note }}">-->
+            {% else %}
+            <div style="margin-left:4.4em; margin-top:.3em;background-color:#b8b0b0;font-size:120%">
+            Зміна опису
             </div>
-            <button style="width:8em;height:2.5em;margin-top:.4em;margin-left:.2em" type="submit" class="btn btn-success">Підтвердити</button>
+            {% endif %}
+            {% csrf_token %}
+            {% if form.errors %}
+                    {% if form.note.errors %}
+                        <div class="alert alert-danger" role="alert">{{form.note.errors.as_text}}</div>
+
+                    {% else %}
+                        <div class="alert alert-danger" role="alert">{{form.description.errors.as_text}}</div>
+                    {% endif %}
+            {% endif %}
+            <div style="background-color:#b8b0b0;margin-top:1.5em" class="form-group">
+                {% if form.note %}
+                    {{form.note.label}}
+                    {{form.note}}
+                {% else %}
+                    {{form.description.label}}
+                    {{form.description}}
+                {% endif %}
+            </div>
+            <button style="width:8em;height:2.5em;margin-top:.4em;margin-left:.2em" type="button" onclick="document.forms['form'].submit()" class="btn btn-success">Підтвердити</button>
         </form>
     </div>
 

@@ -53,16 +53,31 @@ class CreateNoteForm(forms.ModelForm):
     class Meta:
         model = Note
         fields = [
-            "note"
+            "note",
+            "description"
             ]
         labels = {
-            "note":"Запис:"
+            "note":"Запис:",
+            "description":"Опис:"
         }
+        error_messages = {
+            "note":{"required":"Поле з записом не заповнене"},
+            "description":{"required":"Поле з описом не заповнене"}
+
+        }
+
         widgets = {
             "note": forms.TextInput(attrs={
                     "class":"form-control",
                     "placeholder":"Введіть бажаний запис"
+                    }),
+            "description":forms.Textarea(attrs={
+                    "class":"form-control",
+                    "style":"width:100%;height:150px;resize:none",
+                    "placeholder":"Введіть бажаний опис"
                     })
+            
+
         }
 
 
@@ -75,17 +90,34 @@ class CreateTableForm(forms.ModelForm):
             "description",
             "amount"
             ]
+        error_messages = {
+            "amount":{
+                "invalid":"Ви маєте ввести число",
+                "required":"Поле має бути заповнене"
+            }
+        }
+
+
+        labels = {
+            "loan":"За що",
+            "description":"Опис",
+            "amount":"Скільки"
+            }
+            
         widgets = {
             "loan":forms.TextInput(attrs={
                     "class":"form-control",
+                    "style":"margin-top:.8em",
                     "placeholder":"Напишіть за що ви винні гроші"
                     }),
             "description":forms.TextInput(attrs={
                     "class":"form-control",
+                    "style":"margin-top:.8em",
                     "placeholder":"Опишіть заборгованість"
                     }),
             "amount":forms.TextInput(attrs={
                     "class":"form-control",
+                    "style":"margin-top:.8em",
                     "placeholder":"Вкажіть сумму заборгованості"
                     })
         }   
@@ -97,6 +129,11 @@ class EditNoteForm(forms.ModelForm):
         fields = [
             "note"
             ]
+
+        error_messages = {
+            "note":{"required":"Поле запису не заповнене"}
+        }
+
         labels = {
             "note":"Запис:"
         }
@@ -106,6 +143,29 @@ class EditNoteForm(forms.ModelForm):
                     })
         }
         
+class EditDescriptionForm(forms.ModelForm):
+    class Meta:
+        model = Note
+        fields = [
+            "description"
+        ]
+
+        error_messages = {
+            "description":{"required":"Поле опису не заповнене"}
+        }
+
+        labels = {
+            "description":"Опис:"
+        }
+        widgets = {
+            "description":forms.Textarea(attrs={
+                    "class":"form-control",
+                    "style":"resize:none;width:100%;height:150px"
+            })
+        }
+
+
+
 
 
 class TableLoanUpdateForm(forms.ModelForm):
@@ -148,7 +208,12 @@ class TableAmountUpdateForm(forms.ModelForm):
         fields = [
             "amount"
             ]
-
+        error_messages = {
+            "amount":{
+                "invalid":"Ви маєте ввести число",
+                "required":"Поле має бути заповнене"
+            }
+        }
         labels = {
             "amount":"Скільки"
             }

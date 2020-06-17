@@ -77,12 +77,23 @@
 			overflow: auto;
 			background-color: #d6d2d2;
 			font-family: 'Montserrat', sans-serif;
-			font-weight: bold;
 			font-size: 1.4em;
 			
 			
 
 		}
+		
+		button:active{
+			outline:none;
+		}
+		button:visited{
+			outline:none;
+		}
+		button:focus{
+			outline:none;
+		}
+
+
 		.main > div.sheets{
 			overflow: auto;
 			background-color: #d6d2d2;
@@ -167,16 +178,17 @@
 		<div class="main">
 			<div class="tasks">
 				{% for not in notes %}
-				<div style="border: 2px solid #d6d2d2;background-color: #d6d2d2" class="notes" >
-					
-        			<form style="margin-left: .6%;background-color:#d6d2d2;border: 0px" action="{% url "TaskMenu" pk=not.pk %}" method="get">
-					
-						<button style="border: 0px;background-color:#d6d2d2;max-width:100%;width:100%;text-align: center" type="submit">
-							<span style="background-color: #d6d2d2;text-align: center">
-								<p style="background-color: #d6d2d2" >{{ not.note }}</p>
-								<p style="background-color: #d6d2d2" >{{ not.published|date:"d.m.Y H:i:s" }}</p>
-							</span>
+				<div style="border: 2px solid #d6d2d2;background-color: #d6d2d2;margin-top:1em" class="notes">
+        			<form style="margin-left: .6%;background-color:#b5b1b1;border-radius:4px 4px 0px 0px" action="{% url "TaskMenu" pk=not.pk option_of_entry="note" %}" method="get">
+						<button style="border: 0px;background-color:#b5b1b1;max-width:100%;height:2em" type="submit">
+							<div style="background-color:#c4c4c4;border:2px solid #ebebeb;border-radius:5px;margin-left:.26em;font-size:75%;white-space:nowrap" >{{ not.note }}</div>	
 						</button>
+					</form>
+					<form style="margin-left: .6%;background-color:#b5b1b1;border-radius:0px 0px 4px 4px" action="{% url "TaskMenu" pk=not.pk option_of_entry="description"%}" method="get">
+						<button style="border: 0px;background-color:#b5b1b1;max-width:100%;width:100%" type="submit">
+							<div style="background-color:#c4c4c4;border:2px solid #ebebeb;border-radius:5px;white-space: pre-line;text-align:left;font-family: 'Work Sans', sans-serif;font-weight:normal;margin-left:.5%;margin-right:.5%;margin-top:2%">{{ not.description }}</div>
+						</button>
+						<p style="background-color:#c4c4c4;border:2px solid #ebebeb;font-size:65%;margin-left:78%;margin-right:3%;margin-top:2%;text-align:center;border-radius:6px" >{{ not.published|date:"d.m.Y H:i:s" }}</p>
         			</form>
 				</div>
         		{% endfor %}
@@ -276,10 +288,7 @@
 
 
 
-
-
-
-
+		
 
 
 

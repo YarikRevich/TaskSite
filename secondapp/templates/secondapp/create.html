@@ -20,13 +20,24 @@
 
 <div class="table-edit">
     <div class="edit">
-
-        <form class="form-edit" method="post">
+        <form name="form" class="form-edit" method="post" onsubmit="return false;">
             {% csrf_token %}
             <div style="background-color:#b8b0b0" class="form-group">
-                {{form.as_p}}
+                {% if form.errors %}
+                    {% if form.note.errors %}
+                        <div class="alert alert-danger" role="alert">{{form.note.errors.as_text}}</div>
+
+                    {% else %}
+                        <div class="alert alert-danger" role="alert">{{form.description.errors.as_text}}</div>
+                    {% endif %}
+                {% endif %}
+                {{form.note.label}}
+                {{form.note}}
+                {{form.description.label}}
+                {{form.description}}
+                
             </div>
-            <button style="width:8em;height:2.5em;margin-top:.4em;margin-left:.2em" type="submit" class="btn btn-success">Додати</button>
+            <button style="width:8em;height:2.5em;margin-top:.4em;margin-left:.2em" type="button" onclick="document.forms['form'].submit();" class="btn btn-success">Додати</button>
         </form>
     </div>
 

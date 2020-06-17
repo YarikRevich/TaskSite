@@ -15,6 +15,7 @@
     }
     label{
         background-color: #b8b0b0;
+        margin-top:10%
     }
     </style>
 
@@ -29,7 +30,24 @@
             <form class="form-edit" action="{% url "Sheet" %}" method="post">
                 {% csrf_token %}
                 <div style="background-color:#b8b0b0" class="form-group">
-                    {{form.as_p}}
+                    {% if form.errors %}
+                        {% if form.amount.errors %}
+                            <div class="alert alert-danger" role="alert">{{form.amount.errors.as_text}}</div>
+                        {% endif %}
+                    {% endif %}
+                    <div style="margin-top:.7em;background-color:#b8b0b0">
+                    {{form.loan.label}}
+                    {{form.loan}}
+                    </div>
+                    <div style="margin-top:.7em;background-color:#b8b0b0">
+                    {{form.description.label}}
+                    {{form.description}}
+                    </div>
+                    <div style="margin-top:.7em;background-color:#b8b0b0">
+                    {{form.amount.label}}
+                    {{form.amount}}
+                    </div>
+
                 </div>
                 <button style="width:8em;height:2.5em;margin-top:.4em;margin-left:.2em" type="submit" class="btn btn-success">Підтвердити</button>
             </form>

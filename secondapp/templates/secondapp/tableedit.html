@@ -18,17 +18,32 @@
 
             <div class="form-edit">
                 <form style="background-color:#b8b0b0" method="post">
-
                     {% csrf_token %}
-                    {{form}}
-                    <button style="width:8em;height:2.5em;margin-top:.4em;margin-left:2.2em" type="submit" class="btn btn-success">Підтвердити</button>
-                
+                    {% if form.errors %}
+                        {% if form.loan.errors %}
+                            <div class="alert alert-danger" role="alert">{{form.loan.errors.as_text}}</div>
+                        {% elif form.description.errors%}
+                            <div class="alert alert-danger" role="alert">{{form.description.errors.as_text}}</div>
+                        {% else %}
+                            <div class="alert alert-danger" role="alert">{{form.amount.errors.as_text}}</div>
+                        {% endif %}
+                    {% endif %}
+                    {% if form.loan %}
+                        {{form.loan.label}}
+                        {{form.loan}}
+                    {% elif form.description %}
+                        {{form.description.label}}
+                        {{form.description}}
+                    {% else %}
+                        {{form.amount.label}}
+                        {{form.amount}}
+                    {% endif %}
+                    
+                    <button style="width:8em;height:2.5em;margin-top:.4em" type="submit" class="btn btn-success">Підтвердити</button>
                 </form>
-            
                 <form style="background-color:#b8b0b0" action="{% url "DeleteTable" pk=table_pk %}" method="post">
                     {% csrf_token %}
-                    <input type="hidden" name={{stat}} value="{{table}}"> 
-                    <a href="firstpage/"><button style="width:8em;height:3.5em;margin-top: 2em;margin-left:2em" class="btn btn-danger">Видалити запис</button></a>
+                    <a href="firstpage/"><button style="width:8em;height:3.5em;margin-top: 2em" class="btn btn-danger">Видалити запис</button></a>
                 </form>
             </div>
         </div>
@@ -37,19 +52,4 @@
 
 
 
-    <script>
-    var error = "{{error}}"
-    
-    if(error == "True"){
-        
-
-        var div = document.createElement("div");
-        div.textContent = "Ви маєте ввести число";
-        div.setAttribute("class","alert alert-danger");
-        div.setAttribute("role","alert");
-        document.body.appendChild(div); 
-        
-    }
-
-    </script>
 {% endblock content %}

@@ -28,8 +28,8 @@ urlpatterns = [
     path("logout/",LogoutClass.as_view(),name="Logout"),
 
     path("homepage/table/option_name=<str:name_of_option>/<int:pk>",TableEdit.as_view(),name="TableEdit"),
-    path("homepage/task/note_update/<int:pk>",EditNote.as_view(),name="EditNote"),
-    path("homepage/task/note=<int:pk>",TaskMenu.as_view(),name="TaskMenu"),
+    path("homepage/task/note_update/option_of_entry=<str:option_of_entry>/<int:pk>",EditNote.as_view(),name="EditNote"),
+    path("homepage/task/option_of_entry=<str:option_of_entry>/note=<int:pk>",TaskMenu.as_view(),name="TaskMenu"),
     path("homepage/profile",Profile.as_view(),name="Profile"),
     path("homepage/note_delete/<int:pk>",DeleteNote.as_view(),name="DeleteNote"),
     path("homepage/task",CreateNoteClass.as_view(),name="Note"),

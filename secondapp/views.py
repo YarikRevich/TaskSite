@@ -25,9 +25,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
 
-from .forms import CreateRegestrationForm,CreateNoteForm,CreateTableForm,EditNoteForm,TableLoanUpdateForm,TableDescriptionUpdateForm,TableAmountUpdateForm
+from .forms import CreateRegestrationForm,CreateNoteForm,CreateTableForm,EditNoteForm,TableLoanUpdateForm,TableDescriptionUpdateForm,TableAmountUpdateForm,EditDescriptionForm
 from .models import Note,Table
-from .backends import EmailAndPasswordBackend
 
 
 
@@ -152,11 +151,11 @@ class Profile(TemplateView):
                 context["name"] = "Ім'я не вказане"
             try:
                 context["last_name"] = info["connected_last_name"]
-            except:
+            except KeyError:
                 context["last_name"] = "Прізвище не вказане"
             try:
                 context["connected"] = info["connected"]
-            except:
+            except KeyError:
                 context["connected"] = False
         context["email"] = self.request.user.username 
         return context
@@ -183,8 +182,17 @@ class CreateNoteClass(LoginRequiredMixin,CreateView):
     form_class = CreateNoteForm
     login_url = "/"
     def form_valid(self,form):
-        Note.objects.create(author=self.request.user.username,note=form.cleaned_data["note"])
+        Note.objects.create(
+            author=self.request.user.username,
+            note=form.cleaned_data["note"],
+            description=form.cleaned_data["description"]
+        )
         return redirect("Home")
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["email"] = self.request.user.username
+        return context
+    
         
     
 class CreateTableClass(LoginRequiredMixin,CreateView):
@@ -248,7 +256,8 @@ class TaskMenu(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["email"] =  self.request.user.username
-        context["note"] = Note.objects.get(pk=self.kwargs["pk"])
+        context["entry"] = Note.objects.get(pk=self.kwargs["pk"])
+        context["option"] = self.kwargs["option_of_entry"]
         return context
     
 
@@ -263,7 +272,21 @@ class EditNote(UpdateView):
     queryset = Note.objects
     template_name = "secondapp/editentry.html"
     success_url = reverse_lazy("Home")
-    form_class = EditNoteForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["email"] = self.request.user.username
+        context["option"] = self.kwargs["option_of_entry"]
+        return context
+    
+    def get_form_class(self):
+        if self.kwargs["option_of_entry"] == "note":
+            self.form_class = EditNoteForm
+            return self.form_class
+        else:
+            self.form_class = EditDescriptionForm
+            return self.form_class
+
     
 
 class TableEdit(UpdateView,ModelFormMixin,SingleObjectMixin):
@@ -283,6 +306,7 @@ class TableEdit(UpdateView,ModelFormMixin,SingleObjectMixin):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["table_pk"] = self.kwargs["pk"]
+        context["email"] = self.request.user.username
         return context
     
         

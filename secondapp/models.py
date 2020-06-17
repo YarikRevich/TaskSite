@@ -6,7 +6,8 @@ from django.contrib.auth.models import User
 
 class Note(models.Model):
     author = models.CharField(max_length=200,name="author")
-    note = models.CharField(max_length=50)
+    note = models.CharField(max_length=50,null=True)
+    description = models.CharField(max_length=300,null=True)
     published = models.DateTimeField(auto_now_add=True,db_index=True)
 
     def __str__(self):
